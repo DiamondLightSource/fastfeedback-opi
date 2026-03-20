@@ -4,7 +4,7 @@ FROM ghcr.io/diamondlightsource/ubuntu-devcontainer:noble AS developer
 
 # Add any system dependencies for the developer/build environment here
 RUN apt-get update -y && apt-get install -y --no-install-recommends \
-    graphviz \
+    graphviz libqt6gui6 libgl1 libxcb-cursor0 libgles2-mesa-dev \
     && apt-get dist-clean
 
 # The build stage installs the context into the venv
