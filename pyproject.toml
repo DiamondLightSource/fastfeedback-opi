@@ -12,7 +12,7 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
 ]
 description = "Supporting python scripts for controlling the fast-feeback IOC"
-dependencies = [] # Add project dependencies here, e.g. ["click", "numpy"]
+dependencies = ["numpy", "scipy", "cothread", "pyqt5", "scipy", "epicscorelibs"]
 dynamic = ["version"]
 license.file = "LICENSE"
 readme = "README.md"
@@ -31,7 +31,7 @@ dev = [
 ]
 
 [project.scripts]
-dls-fast-feedback = "dls_fast_feedback.__main__:main"
+dls-fast-feedback = "dls_fast_feedback.fofbnogui:main"
 
 [project.urls]
 GitHub = "https://github.com/DiamondLightSource/dls-fast-feedback"
