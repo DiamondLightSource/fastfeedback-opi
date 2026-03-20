@@ -1,0 +1,10 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: dls-fast-feedback
+  title: dls-fast-feedback
+  description: Supporting python scripts for controlling the fast-feeback IOC
+spec:
+  type: application
+  lifecycle: production
+  owner: group:default/high-level-apps
