@@ -10,8 +10,8 @@ from scipy.io import loadmat
 
 from . import deal_rm_sr, imc3
 
-CONFIG_FILE = os.getcwd() + "/src/dls_fast_feedback/fofb.config"
-# CONFIG_FILE = "/home/ops/diagnostics/config/fofb.config"
+# CONFIG_FILE = os.getcwd() + "/src/fastfeedback_opi/fofb.config"
+CONFIG_FILE = "/home/ops/diagnostics/config/fofb.config"
 PLANES = 2
 TEST_MODE = False
 NODAMP = False
@@ -42,7 +42,7 @@ def distribute_rm_and_correctors(golden, mu, bpm_weights, cm_weights):
     caput(names, values)
 
 
-class configurator(object):
+class configurator:
     def __init__(self, config_file):
         self.CONFIG_FILE = config_file
         self.reread()
@@ -53,7 +53,19 @@ class configurator(object):
         self.read(ringmode)
 
     def read(self, mode):
-        context = dict(pi=pi, array=array, zeros=zeros, mode=mode)
+        def py2_range(*args):
+            return list(range(*args))
+
+        # This is a horrible hack to make the existing config file work with py3 which
+        # handles ranges differently. It basically overwrites the default python range()
+        # function with py2_range which is the default python2 range().
+        context = {
+            "pi": pi,
+            "array": array,
+            "zeros": zeros,
+            "mode": mode,
+            "range": py2_range,
+        }
         params = {}
         exec(
             compile(open(self.CONFIG_FILE, "rb").read(), self.CONFIG_FILE, "exec"),
@@ -80,7 +92,7 @@ class configurator(object):
             hcm = 1.0 / raw_weights["HCM"]["physicsvals"][0][0]
             vcm = 1.0 / raw_weights["VCM"]["physicsvals"][0][0]
             self.cm_weights = [diag(hcm.T[0]), diag(vcm.T[0])]
-        except IOError:
+        except OSError:
             print("Warning: Not using corrector magnet weights")
             self.cm_weights = None
 
@@ -93,7 +105,7 @@ class configurator(object):
                 warnings.simplefilter("ignore")
                 self.bpm_weights = loadmat(bpm_weights_file, appendmat=False)["weights"]
             print("Using BPM weights")
-        except IOError:
+        except OSError:
             self.bpm_weights = None
 
         # get taps for both planes
