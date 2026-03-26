@@ -5,6 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python Debugger: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "/cache/venv-for/scratch/zrv91478/vscode/fastfeedback-opi/bin/fofbnogui",
+            "args": [
+                "start"
+            ],
+            "console": "integratedTerminal"
+        },
+        {
             "name": "Debug Unit Test",
             "type": "debugpy",
             "request": "launch",
