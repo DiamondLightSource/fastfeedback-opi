@@ -82,8 +82,7 @@ def deal(
 
     values = []
 
-    keys = slices.keys()
-    keys.sort()
+    keys = sorted(slices.keys())
     for k in keys:
         v = slices[k].ravel()
         values.append(v)

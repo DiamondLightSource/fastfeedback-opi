@@ -5,7 +5,7 @@ import warnings
 import cothread
 from cothread.catools import DBR_STRING, caget, caput
 from numpy import array, concatenate, diag, ones, pi, zeros
-from PyQt5.QtWidgets import QMessageBox
+from PyQt6.QtWidgets import QMessageBox
 from scipy.io import loadmat
 
 from . import deal_rm_sr, imc3
@@ -16,6 +16,22 @@ PLANES = 2
 TEST_MODE = False
 NODAMP = False
 NOBEAM = False
+
+BPMS_UNREACHABLE = """<html><body>
+<p>The following Libera electron BPMs are currently unreachable:</p>
+<p>%s</p>
+<p>Before restarting fast feedback, please perform one of the following
+actions:</p>
+<ul>
+<li>Power cycle the currently unreachable Liberas.  If this does not restore
+normal function, please leave it switched off.  This is the preferred
+action.</li>
+<li>Switch off the unreachable Liberas and leave them switched off.</li>
+</ul>
+<p>Press <b>Cancel</b> or return unless the actions above have been performed.
+Press <b>Retry</b> to start fast feedback anyway.</p>
+</body></html>
+"""
 
 
 def distribute_rm_and_correctors(golden, mu, bpm_weights, cm_weights):
@@ -143,10 +159,12 @@ def qt_popup(title, body):
         None,
         title,
         body,
-        QMessageBox.Cancel | QMessageBox.Default | QMessageBox.Escape,
-        QMessageBox.Retry,
+        QMessageBox.StandardButton.Cancel
+        | QMessageBox.StandardButton.Default
+        | QMessageBox.StandardButton.Escape,
+        QMessageBox.StandardButton.Retry,
     )
-    return response == QMessageBox.Retry
+    return response == QMessageBox.StandardButton.Retry
 
 
 def BPM_name(index):
@@ -178,7 +196,7 @@ def start_feedback():
         # If any BPMs are unreachable, don't proceed without confirmation.
         if not qt_popup(
             "One or more BPMS unreachable",
-            BPMS_unreachable % ", ".join(map(BPM_name, unreachable)),
+            BPMS_UNREACHABLE % ", ".join(map(BPM_name, unreachable)),
         ):
             return
 
@@ -237,23 +255,6 @@ def start_feedback():
     caput(fbmany("FASTART"), 1)
 
 
-BPMS_unreachable = """<html><body>
-<p>The following Libera electron BPMs are currently unreachable:</p>
-<p>%s</p>
-<p>Before restarting fast feedback, please perform one of the following
-actions:</p>
-<ul>
-<li>Power cycle the currently unreachable Liberas.  If this does not restore
-normal function, please leave it switched off.  This is the preferred
-action.</li>
-<li>Switch off the unreachable Liberas and leave them switched off.</li>
-</ul>
-<p>Press <b>Cancel</b> or return unless the actions above have been performed.
-Press <b>Retry</b> to start fast feedback anyway.</p>
-</body></html>
-"""
-
-
 if len(sys.argv) > 1 and sys.argv[1] == "TEST":
     TEST_MODE = True
 if len(sys.argv) > 1 and sys.argv[1] == "NODAMP":
@@ -262,14 +263,18 @@ if len(sys.argv) > 1 and sys.argv[1] == "NOBEAM":
     NOBEAM = True
 if len(sys.argv) >= 3:
     CONFIG_FILE = sys.argv[2]
-
 CONFIG = configurator(CONFIG_FILE)
 
 
-if sys.argv[1] == "start":
-    start_feedback()
-elif sys.argv[1] == "stop":
-    stop_feedback()
-else:
-    print("Unknown action")
-    sys.exit(1)
+def main():
+    if sys.argv[1] == "start":
+        start_feedback()
+    elif sys.argv[1] == "stop":
+        stop_feedback()
+    else:
+        print("Unknown action")
+        sys.exit(1)
+
+
+if __name__ == "__main__":
+    main()
