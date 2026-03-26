@@ -16,9 +16,9 @@ def struct(**kw):
 
 def invert(
     resp,
-    mu=[1.0, 1.0],
-    badbpm=[[], []],
-    badcm=[[], []],
+    mu=[1.0, 1.0],  # noqa: B006
+    badbpm=[[], []],  # noqa: B006
+    badcm=[[], []],  # noqa: B006
     progress=lambda: None,
     full=0,
     bpm_weights=None,
@@ -29,14 +29,14 @@ def invert(
     irms = []
     for p in [0, 1]:
         rmq = resp[p]
-        (MAXBPM, MAXCM) = rmq.shape
-        irm = np.zeros((MAXCM, MAXBPM))  # Fill in nonzero elements later
+        (max_bpm, max_cm) = rmq.shape
+        irm = np.zeros((max_cm, max_bpm))  # Fill in nonzero elements later
 
-        wb = np.asmatrix(np.eye(MAXBPM)) if bpm_weights is None else bpm_weights[p]
-        wc = np.asmatrix(np.eye(MAXCM)) if cm_weights is None else cm_weights[p]
+        wb = np.asmatrix(np.eye(max_bpm)) if bpm_weights is None else bpm_weights[p]
+        wc = np.asmatrix(np.eye(max_cm)) if cm_weights is None else cm_weights[p]
 
-        goodb = np.arange(MAXBPM)
-        goodc = np.arange(MAXCM)
+        goodb = np.arange(max_bpm)
+        goodc = np.arange(max_cm)
         bpm = np.setdiff1d(goodb, badbpm[p])
         cm = np.setdiff1d(goodc, badcm[p])
         rm = np.asmatrix(rmq[np.ix_(bpm, cm)])

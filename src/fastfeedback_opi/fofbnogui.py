@@ -58,7 +58,7 @@ def distribute_rm_and_correctors(golden, mu, bpm_weights, cm_weights):
     caput(names, values)
 
 
-class configurator:
+class Configurator:
     def __init__(self, config_file):
         self.CONFIG_FILE = config_file
         self.reread()
@@ -126,25 +126,25 @@ class configurator:
 
         # get taps for both planes
         delay = self.DELAY
-        Ts = self.Ts
-        ETA = array([self.ETAX, self.ETAY]) * delay * Ts
+        ts = self.Ts
+        eta = array([self.ETAX, self.ETAY]) * delay * ts
         btaps = zeros((self.MAX_TAPS, PLANES))
         ataps = zeros((self.MAX_TAPS, PLANES))
         for n in range(PLANES):
             btaps[:, n], ataps[:, n] = imc3.imc(
-                ETA[n], epsilon=self.EPSILON, delay=delay, lowpass=self.CUTOFF[n]
+                eta[n], epsilon=self.EPSILON, delay=delay, lowpass=self.CUTOFF[n]
             )
         self.btaps = btaps
         self.ataps = ataps
 
 
 def fbmany(suffix):
-    return ["SR%02dA-CS-FOFB-01:%s" % (n + 1, suffix) for n in range(CONFIG.CELLS)]
+    return ["SR%02dA-CS-FOFB-01:%s" % (n + 1, suffix) for n in range(CONFIG.CELLS)]  # noqa: UP031
 
 
 def cormany(plane, suffix):
     return [
-        "SR%02dA-PC-%sSTR-%02d:%s" % (a + 1, plane, i + 1, suffix)
+        "SR%02dA-PC-%sSTR-%02d:%s" % (a + 1, plane, i + 1, suffix)  # noqa: UP031
         for a in range(CONFIG.CELLS)
         for i in range(CONFIG.MAGS)
     ]
@@ -167,7 +167,7 @@ def qt_popup(title, body):
     return response == QMessageBox.StandardButton.Retry
 
 
-def BPM_name(index):
+def bpm_name(index):
     """Converts index 0.. to full BPM name."""
     return deal_rm_sr.bpm_names[deal_rm_sr.bpm_concentrator_ids.index(index)]
 
@@ -196,7 +196,7 @@ def start_feedback():
         # If any BPMs are unreachable, don't proceed without confirmation.
         if not qt_popup(
             "One or more BPMS unreachable",
-            BPMS_UNREACHABLE % ", ".join(map(BPM_name, unreachable)),
+            BPMS_UNREACHABLE % ", ".join(map(bpm_name, unreachable)),
         ):
             return
 
@@ -263,7 +263,7 @@ if len(sys.argv) > 1 and sys.argv[1] == "NOBEAM":
     NOBEAM = True
 if len(sys.argv) >= 3:
     CONFIG_FILE = sys.argv[2]
-CONFIG = configurator(CONFIG_FILE)
+CONFIG = Configurator(CONFIG_FILE)
 
 
 def main():

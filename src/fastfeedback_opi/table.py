@@ -1,4 +1,4 @@
-class table:
+class Table:
     def __init__(self, filename):
         with open(filename) as f:
             lines = f.readlines()
@@ -6,12 +6,12 @@ class table:
             # assert(lines[0] == "# epics ioc card slot link farow mml1\n")
             names = lines[0].split()[1:]
             cols = {}
-            for n in names:
-                cols[n] = []
-            for l in lines[1:]:
-                row = l.split()
-                for n, v in zip(names, row):
-                    cols[n].append(v)
+            for name in names:
+                cols[name] = []
+            for line in lines[1:]:
+                row = line.split()
+                for name, var in zip(names, row, strict=True):
+                    cols[name].append(var)
             self.names = names
             self.cols = cols
 

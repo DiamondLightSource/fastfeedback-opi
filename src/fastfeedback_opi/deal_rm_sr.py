@@ -19,17 +19,24 @@ def filedir():
 cname = os.path.join(filedir(), "correctors.txt")
 bname = os.path.join(filedir(), "bpms.txt")
 
-bt = table.table(bname)
+bt = table.Table(bname)
 bpm_concentrator_ids = [int(m) - 1 for m in bt.cols["mml1"]]
 bpm_names = bt.cols["epics"]
 
 
 def deal(
-    hbpmen, vbpmen, hstren, vstren, rm, mu=[1, 1], bpm_weights=None, cm_weights=None
+    hbpmen,
+    vbpmen,
+    hstren,
+    vstren,
+    rm,
+    mu=[1, 1],  # noqa: B006
+    bpm_weights=None,
+    cm_weights=None,
 ):
 
-    ct = table.table(cname)
-    bt = table.table(bname)
+    ct = table.Table(cname)
+    bt = table.Table(bname)
 
     channels = [e + ":I" for e in ct.cols["epics"]]
     readback = caget(channels)
