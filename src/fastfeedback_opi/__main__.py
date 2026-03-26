@@ -1,4 +1,4 @@
-"""Interface for ``python -m dls_fast_feedback``."""
+"""Interface for ``python -m fastfeedback_opi``."""
 
 from argparse import ArgumentParser
 from collections.abc import Sequence

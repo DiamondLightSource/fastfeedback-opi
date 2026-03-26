@@ -1,9 +1,9 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: dls-fast-feedback
-  title: dls-fast-feedback
-  description: Supporting python scripts for controlling the fast-feeback IOC
+  name: fastfeedback-opi
+  title: fastfeedback-opi
+  description: Supporting python scripts for controlling the fast-feeback system
 spec:
   type: application
   lifecycle: production

@@ -6,14 +6,14 @@ author_name: High Level Apps
 component_lifecycle: production
 component_owner: group:default/high-level-apps
 component_type: application
-description: Supporting python scripts for controlling the fast-feeback IOC
-distribution_name: dls-fast-feedback
+description: Supporting python scripts for controlling the fast-feeback system
+distribution_name: fastfeedback-opi
 docker: true
 docker_debug: false
 docs_type: README
 git_platform: github.com
 github_org: DiamondLightSource
-package_name: dls_fast_feedback
+package_name: fastfeedback_opi
 pypi: false
-repo_name: dls-fast-feedback
+repo_name: fastfeedback-opi
 type_checker: mypy
