@@ -3,14 +3,15 @@ import sys
 import warnings
 
 import cothread
-import deal_rm_sr
-import imc3
 from cothread.catools import DBR_STRING, caget, caput
 from numpy import array, concatenate, diag, ones, pi, zeros
 from PyQt5.QtWidgets import QMessageBox
 from scipy.io import loadmat
 
-CONFIG_FILE = "/home/ops/diagnostics/config/fofb.config"
+from . import deal_rm_sr, imc3
+
+CONFIG_FILE = os.getcwd() + "/src/dls_fast_feedback/fofb.config"
+# CONFIG_FILE = "/home/ops/diagnostics/config/fofb.config"
 PLANES = 2
 TEST_MODE = False
 NODAMP = False
