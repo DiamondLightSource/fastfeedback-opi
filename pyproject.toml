@@ -12,7 +12,14 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
 ]
 description = "Supporting python scripts for controlling the fast-feeback IOC"
-dependencies = ["numpy", "scipy", "cothread", "pyqt5", "scipy", "epicscorelibs"]
+dependencies = [
+    "numpy",
+    "scipy",
+    "cothread",
+    "pyqt5",
+    "epicscorelibs",
+    "matplotlib",
+]
 dynamic = ["version"]
 license.file = "LICENSE"
 readme = "README.md"
