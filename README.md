@@ -5,7 +5,7 @@
 
 # fastfeedback_opi
 
-Supporting python scripts for controlling the fast-feeback system
+Supporting python scripts for controlling the DI fast-feeback system
 
 This is where you should write a short paragraph that describes what your module does,
 how it does it, and why people should use it.

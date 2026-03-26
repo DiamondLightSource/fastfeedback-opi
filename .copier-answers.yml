@@ -6,7 +6,7 @@ author_name: High Level Apps
 component_lifecycle: production
 component_owner: group:default/high-level-apps
 component_type: application
-description: Supporting python scripts for controlling the fast-feeback system
+description: Supporting python scripts for controlling the DI fast-feeback system
 distribution_name: fastfeedback-opi
 docker: true
 docker_debug: false
