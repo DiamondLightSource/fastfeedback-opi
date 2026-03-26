@@ -16,7 +16,7 @@ dependencies = [
     "numpy",
     "scipy",
     "cothread",
-    "pyqt5",
+    "pyqt6",
     "epicscorelibs",
     "matplotlib",
 ]
