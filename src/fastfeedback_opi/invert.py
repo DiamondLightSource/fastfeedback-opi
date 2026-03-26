@@ -32,27 +32,27 @@ def invert(
         (MAXBPM, MAXCM) = rmq.shape
         irm = np.zeros((MAXCM, MAXBPM))  # Fill in nonzero elements later
 
-        wb = np.mat(np.eye(MAXBPM)) if bpm_weights is None else bpm_weights[p]
-        wc = np.mat(np.eye(MAXCM)) if cm_weights is None else cm_weights[p]
+        wb = np.asmatrix(np.eye(MAXBPM)) if bpm_weights is None else bpm_weights[p]
+        wc = np.asmatrix(np.eye(MAXCM)) if cm_weights is None else cm_weights[p]
 
         goodb = np.arange(MAXBPM)
         goodc = np.arange(MAXCM)
         bpm = np.setdiff1d(goodb, badbpm[p])
         cm = np.setdiff1d(goodc, badcm[p])
-        rm = np.mat(rmq[np.ix_(bpm, cm)])
-        wbm = np.mat(wb[np.ix_(bpm, bpm)])
-        wcm = np.mat(wc[np.ix_(cm, cm)])
+        rm = np.asmatrix(rmq[np.ix_(bpm, cm)])
+        wbm = np.asmatrix(wb[np.ix_(bpm, bpm)])
+        wcm = np.asmatrix(wc[np.ix_(cm, cm)])
         # Matrix might have no elements if all BPMs or correctors are disabled
         if (wbm * rm * wcm).size == 0:
             irms.append(
                 struct(rm=rm, irm=irm, u=np.array([]), s=np.array([]), vt=np.array([]))
             )
             continue
-        (u, s, vt) = np.svd(wbm * rm * wcm, full_matrices=full)
+        (u, s, vt) = np.linalg.svd(wbm * rm * wcm, full_matrices=full)
 
         # Scale mu when weights matrices are used
         if cm_weights or bpm_weights:
-            s0 = np.svd(rm)[1][0]
+            s0 = np.linalg.svd(rm)[1][0]
             mu[p] = mu[0] * s[0] / s0
 
         progress()
