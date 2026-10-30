@@ -10,6 +10,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
 description = "Supporting python scripts for controlling the fast-feeback IOC"
 dependencies = [
@@ -27,7 +28,6 @@ requires-python = ">=3.11"
 
 [dependency-groups]
 dev = [
-    "copier",
     "mypy",
     "pre-commit",
     "pytest",
@@ -47,6 +47,10 @@ GitHub = "https://github.com/DiamondLightSource/fastfeedback-opi"
 [[project.authors]] # Further authors may be added by duplicating this section
 email = "diamhighlvlapps@diamond.ac.uk"
 name = "High Level Apps"
+
+[tool.uv]
+# Minimum uv to fix eMudhra CA cert incident (see discuss.python.org/t/109576)
+required-version = ">=0.13.5"
 
 [tool.setuptools_scm]
 version_file = "src/fastfeedback_opi/_version.py"
