@@ -10,8 +10,9 @@ Supporting python scripts for controlling the DI fast-feeback system
 This is where you should write a short paragraph that describes what your module does,
 how it does it, and why people should use it.
 
-Source          | <https://github.com/DiamondLightSource/fastfeedback-opi>
+What            | Where
 :---:           | :---:
+Source          | <https://github.com/DiamondLightSource/fastfeedback-opi>
 Docker          | `docker run ghcr.io/diamondlightsource/fastfeedback-opi:latest`
 Releases        | <https://github.com/DiamondLightSource/fastfeedback-opi/releases>
 
